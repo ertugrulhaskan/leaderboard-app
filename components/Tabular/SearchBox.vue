@@ -14,7 +14,7 @@ const { searchQuery } = storeToRefs(storePlayers);
       type="text"
       placeholder="Search..."
     />
-    <button v-if="searchQuery">
+    <button v-if="searchQuery" type="button">
       <Icon
         name="material-symbols:close-rounded"
         class="absolute top-3 right-4 cursor-pointer text-xl text-gray-900"
