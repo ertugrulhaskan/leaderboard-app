@@ -1,5 +1,5 @@
 <template>
   <div>
-    <TabularList />
+    <TabularTable />
   </div>
 </template>

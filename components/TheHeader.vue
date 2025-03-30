@@ -1,8 +1,7 @@
 <template>
-  <header class="bg-white border-b shadow-2xs border-gray-200 p-4">
-    <div class="container mx-auto flex justify-between gap-4 items-center">
-      <h1 class="text-2xl font-bold">Leaderboard</h1>
-      <button>New User</button>
+  <header class="border-b border-emerald-600/30 bg-emerald-50 p-4">
+    <div class="container mx-auto flex items-center justify-between gap-4">
+      <h1 class="text-2xl font-bold text-emerald-600">Leaderboard</h1>
     </div>
   </header>
 </template>
