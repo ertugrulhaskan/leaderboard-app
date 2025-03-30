@@ -47,6 +47,7 @@ export default defineNuxtConfig({
     "@nuxt/test-utils",
     "@pinia/nuxt",
     "@vueuse/nuxt",
+    "@vee-validate/nuxt",
   ],
 
   fonts: {

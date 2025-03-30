@@ -1,60 +1,93 @@
 <script setup>
-// const storePlayers = usePlayersStore();
-// const { addPlayer } = storeToRefs(storePlayers);
+import { useField, useForm } from "vee-validate";
+import { toTypedSchema } from "@vee-validate/zod";
+import * as zod from "zod";
 
-const form = reactive({
-  name: "",
-  age: "",
-  points: 0,
-  address: "",
+const storePlayers = usePlayersStore();
+
+const validationSchema = toTypedSchema(
+  zod.object({
+    name: zod
+      .string({
+        required_error: "Name is required",
+      })
+      .min(3, "Name must be at least 3 characters long")
+      .refine((value) => !/[^a-zA-Z\s]/.test(value), {
+        message: "Name must only contain letters and spaces",
+      }),
+    age: zod
+      .string({
+        required_error: "Age is required",
+      })
+      .min(1, "Age must be at least 1 character long")
+      .max(3, "Age must be at most 3 characters long")
+      .transform((value) => parseInt(value, 10))
+      .refine((value) => !isNaN(value), {
+        message: "Age must be a number",
+      })
+      .refine((value) => value > 0, {
+        message: "Age must be a positive number",
+      })
+      .refine((value) => value < 120, {
+        message: "Age must be less than 120",
+      }),
+    address: zod
+      .string({
+        required_error: "Address is required",
+      })
+      .min(5, "Address must be at least 5 characters long"),
+  }),
+);
+
+const { handleSubmit, errors } = useForm({
+  validationSchema,
+});
+
+const { value: name } = useField("name");
+const { value: age } = useField("age");
+const { value: address } = useField("address");
+
+const onSubmit = handleSubmit((values) => {
+  // Simulate an API call
+  storePlayers.addPlayer({
+    ...values,
+    id: Date.now(),
+    score: 0,
+  });
 });
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit">
+  <form @submit.prevent="onSubmit">
     <div class="flex flex-col gap-4 p-4">
-      <div class="flex flex-col gap-2">
-        <label for="name" class="text-sm font-medium">Name</label>
-        <input
-          id="name"
-          v-model="form.name"
-          type="text"
-          class="rounded-md border border-gray-300 p-2"
-          required
-        />
-      </div>
-      <div class="flex flex-col gap-2">
-        <label for="age" class="text-sm font-medium">Age</label>
-        <input
-          id="age"
-          v-model="form.age"
-          type="number"
-          class="rounded-md border border-gray-300 p-2"
-          required
-        />
-      </div>
-      <div class="flex flex-col gap-2">
-        <label for="address" class="text-sm font-medium">Address</label>
-        <input
-          id="address"
-          v-model="form.address"
-          type="text"
-          class="rounded-md border border-gray-300 p-2"
-          required
-        />
-      </div>
+      <BaseInput
+        v-model="name"
+        label="Full Name"
+        type="text"
+        :is-required="true"
+        :is-error="errors.name"
+      />
+      <BaseInput
+        v-model="age"
+        label="Age"
+        type="text"
+        :is-required="true"
+        :is-error="errors.age"
+      />
+      <BaseInput
+        v-model="address"
+        label="Address"
+        type="text"
+        :is-required="true"
+        :is-error="errors.address"
+      />
       <button
+        :disabled="Object.keys(errors).length > 0"
         type="submit"
-        class="mt-4 flex cursor-pointer items-center justify-center rounded-md bg-indigo-500 px-4 py-2 text-white transition duration-200 hover:bg-indigo-600"
+        class="flex cursor-pointer items-center justify-center rounded-md bg-indigo-500 px-4 py-2 text-white transition duration-200 hover:bg-indigo-600 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-300"
       >
         Add Player
       </button>
-    </div>
-    <div v-if="error" class="mt-2 text-red-500">
-      {{ error }}
-    </div>
-    <div v-if="success" class="mt-2 text-green-500">
-      Player created successfully!
     </div>
   </form>
 </template>

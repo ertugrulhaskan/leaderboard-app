@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useModalBoxStore } from "#imports";
 
 export const usePlayersStore = defineStore("players", {
   state: () => ({
@@ -72,10 +73,12 @@ export const usePlayersStore = defineStore("players", {
       this.sortPlayers();
     },
     addPlayer(player) {
-      // TODO: Implement addPlayer logic
-      // this.players.push(player);
-      // this.sortingType = "desc";
-      // this.sortPlayers();
+      const storeModalBoxStore = useModalBoxStore();
+
+      this.players.push(player);
+      this.sortingType = "desc";
+      this.sortPlayers();
+      storeModalBoxStore.closeModal();
     },
   },
 });
