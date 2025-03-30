@@ -1,6 +1,12 @@
 <script setup>
 const storePlayers = usePlayersStore();
-const { filteredPlayers } = storeToRefs(storePlayers);
+const { player: playerDetails, filteredPlayers } = storeToRefs(storePlayers);
+
+const playerDetailsHandler = (event, player) => {
+  if (event.target.tagName === "TD") {
+    playerDetails.value = player;
+  }
+};
 </script>
 
 <template>
@@ -11,6 +17,7 @@ const { filteredPlayers } = storeToRefs(storePlayers);
     v-for="(player, index) in filteredPlayers"
     :key="player.id"
     class="group cursor-pointer border-b border-gray-200 last:border-none even:bg-gray-50 hover:bg-amber-50"
+    @click="playerDetailsHandler($event, player)"
   >
     <td class="border-gray-200 text-center">
       <div class="relative px-4 py-2">

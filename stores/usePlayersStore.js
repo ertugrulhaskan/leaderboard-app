@@ -6,6 +6,8 @@ export const usePlayersStore = defineStore("players", {
     loading: false,
     error: null,
     searchQuery: "",
+    sortingType: "asc",
+    player: null,
   }),
   getters: {
     filteredPlayers: (state) => {
@@ -35,28 +37,39 @@ export const usePlayersStore = defineStore("players", {
         this.error = error;
       } finally {
         this.loading = false;
+        this.sortPlayers("name");
       }
     },
-    reorderPlayersScores() {
-      this.filteredPlayers.sort((a, b) => b.score - a.score);
+    sortPlayers(by = "score") {
+      this.players.sort((a, b) => {
+        if (typeof a[by] === "string") {
+          return this.sortingType === "asc"
+            ? a[by].localeCompare(b[by])
+            : b[by].localeCompare(a[by]);
+        } else {
+          return this.sortingType === "asc" ? a[by] - b[by] : b[by] - a[by];
+        }
+      });
     },
     deletePlayer(id) {
       this.players = this.players.filter((player) => player.id !== id);
-      this.reorderPlayersScores();
+      this.sortPlayers();
     },
     incrementScore(id) {
       const player = this.players.find((player) => player.id === id);
       if (player) {
         player.score++;
       }
-      this.reorderPlayersScores();
+      this.sortingType = "desc";
+      this.sortPlayers();
     },
     decrementScore(id) {
       const player = this.players.find((player) => player.id === id);
       if (player && player.score > 0) {
         player.score--;
       }
-      this.reorderPlayersScores();
+      this.sortingType = "desc";
+      this.sortPlayers();
     },
   },
 });

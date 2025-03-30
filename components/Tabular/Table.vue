@@ -12,18 +12,22 @@ await storePlayers.fetchPlayers();
         {
           name: 'Rank',
           classes: 'w-10',
+          sortingValue: null,
         },
         {
           name: 'Player',
           classes: 'text-left',
+          sortingValue: 'name',
         },
         {
-          name: 'Points',
+          name: 'Scores',
           classes: 'w-20 text-left',
+          sortingValue: 'score',
         },
         {
           name: 'Actions',
           classes: 'w-20 text-center',
+          sortingValue: null,
         },
       ]"
     />
