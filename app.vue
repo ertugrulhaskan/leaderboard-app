@@ -4,4 +4,5 @@
     <NuxtLoadingIndicator />
     <NuxtPage />
   </NuxtLayout>
+  <BaseModalBox />
 </template>

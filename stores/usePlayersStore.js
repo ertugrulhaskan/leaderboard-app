@@ -71,5 +71,11 @@ export const usePlayersStore = defineStore("players", {
       this.sortingType = "desc";
       this.sortPlayers();
     },
+    addPlayer(player) {
+      // TODO: Implement addPlayer logic
+      // this.players.push(player);
+      // this.sortingType = "desc";
+      // this.sortPlayers();
+    },
   },
 });
