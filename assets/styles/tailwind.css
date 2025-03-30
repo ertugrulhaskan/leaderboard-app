@@ -1,10 +1,15 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Poppins", "sans-serif";
+  --font-mono: "Noto Sans Mono", "monospace";
+}
+
 @layer base {
   body {
-    @apply text-gray-900;
+    @apply font-sans text-gray-900;
   }
   a {
-    @apply text-blue-600 hover:text-blue-800;
+    @apply font-mono text-indigo-600 hover:text-indigo-800;
   }
 }

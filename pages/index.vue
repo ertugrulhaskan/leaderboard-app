@@ -1,5 +1,3 @@
 <template>
-  <div>
-    <TabularList />
-  </div>
+  <TabularList />
 </template>

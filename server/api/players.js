@@ -1,36 +1,16 @@
-export default defineEventHandler(() => {
-  const players = [
-    {
-      name: "John Doe",
-      age: 25,
-      score: 1000,
-      address: "123 Main St",
-    },
-    {
-      name: "Jane Smith",
-      age: 30,
-      score: 1500,
-      address: "456 Elm St",
-    },
-    {
-      name: "Peter Jones",
-      age: 20,
-      score: 800,
-      address: "789 Oak St",
-    },
-    {
-      name: "Mary Brown",
-      age: 35,
-      score: 2000,
-      address: "101 Pine St",
-    },
-    {
-      name: "David Lee",
-      age: 28,
-      score: 1200,
-      address: "222 Maple St",
-    },
-  ];
+export default defineEventHandler(async () => {
+  const response = await fetch("https://randomuser.me/api/?results=10&nat=us");
+  const data = await response.json();
+
+  const players = data.results.map((user, index) => {
+    return {
+      id: index + 1,
+      name: `${user.name.first} ${user.name.last}`,
+      age: user.dob.age,
+      score: 0,
+      address: `${user.location.street.number} ${user.location.street.name}`,
+    };
+  });
 
   return players;
 });

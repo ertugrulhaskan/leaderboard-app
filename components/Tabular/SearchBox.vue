@@ -1,10 +1,6 @@
 <script setup>
-const searchQuery = ref("");
-const emit = defineEmits(["search"]);
-
-const onSearch = () => {
-  emit("search", searchQuery.value);
-};
+const storePlayers = usePlayersStore();
+const { searchQuery } = storeToRefs(storePlayers);
 </script>
 <template>
   <div class="relative">
@@ -14,10 +10,16 @@ const onSearch = () => {
     />
     <input
       v-model="searchQuery"
-      class="w-full rounded-full border border-gray-300 px-4 py-2 pl-10 focus:border-blue-500 focus:ring focus:ring-blue-200"
+      class="w-full rounded-full border border-gray-300 px-4 py-2 pl-10 text-gray-900 outline-none focus:border-indigo-600"
       type="text"
       placeholder="Search..."
-      @input="onSearch"
     />
+    <button v-if="searchQuery">
+      <Icon
+        name="material-symbols:close-rounded"
+        class="absolute top-3 right-4 cursor-pointer text-xl text-gray-900"
+        @click="searchQuery = ''"
+      />
+    </button>
   </div>
 </template>
