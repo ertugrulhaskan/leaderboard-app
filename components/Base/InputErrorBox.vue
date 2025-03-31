@@ -7,7 +7,7 @@ const props = defineProps({
 });
 </script>
 <template>
-  <div v-if="props.error" class="text-sm font-bold text-rose-600">
+  <div v-if="props.error" class="font-mono text-xs font-bold text-rose-600">
     {{ props.error }}
   </div>
 </template>

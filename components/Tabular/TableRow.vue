@@ -24,27 +24,23 @@ const playerDetailsHandler = (event, player) => {
     class="group cursor-pointer border-b border-gray-200 last:border-none even:bg-gray-50 hover:bg-amber-50"
     @click="playerDetailsHandler($event, player)"
   >
-    <td class="border-gray-200 text-center">
-      <div class="relative px-4 py-2">
-        <span class="text-sm">{{ index + 1 }}</span>
-        <button
-          type="button"
-          class="absolute top-1.5 -left-0.5 hidden cursor-pointer items-center justify-center rounded-full group-hover:flex hover:text-red-600"
-          @click="storePlayers.deletePlayer(player.id)"
-        >
-          <Icon name="material-symbols:delete-forever" class="text-3xl" />
-        </button>
-      </div>
+    <td class="relative border-gray-200 px-4 py-2 text-center">
+      <span class="text-sm">{{ index + 1 }}</span>
+      <button
+        type="button"
+        class="absolute top-1.5 -left-0.5 hidden cursor-pointer items-center justify-center rounded-full group-hover:flex hover:text-red-600"
+        @click="storePlayers.deletePlayer(player.id)"
+      >
+        <Icon name="material-symbols:delete-forever" class="text-3xl" />
+      </button>
     </td>
-    <td class="border-l border-gray-200 text-left text-sm">
-      <div class="relative px-4 py-2">
-        {{ player.name }}
-        <TabularPlayerDetails
-          v-show="playerDetails?.id === player.id"
-          :player="playerDetails"
-          @close="playerDetails = null"
-        />
-      </div>
+    <td class="relative border-l border-gray-200 px-4 py-2 text-left text-sm">
+      {{ player.name }}
+      <TabularPlayerDetails
+        v-if="playerDetails?.id === player.id"
+        :player="playerDetails"
+        @close="playerDetails = null"
+      />
     </td>
     <td class="border-l border-gray-200 px-4 py-2 text-right text-sm">
       {{ player.score }}

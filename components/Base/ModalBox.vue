@@ -13,7 +13,7 @@ const { isModalVisible, title, view } = storeToRefs(storeModalBox);
       >
         <OnClickOutside @trigger="isModalVisible = false">
           <div
-            class="flex max-w-2xl min-w-md flex-col overflow-hidden rounded-2xl bg-white shadow-2xs"
+            class="flex w-[calc(100vw-40px)] flex-col overflow-hidden rounded-2xl bg-white shadow-2xs md:w-auto md:min-w-lg"
           >
             <div
               class="relative flex w-auto flex-row items-center justify-between gap-2 border-b border-gray-200 bg-gray-50 px-4 py-2"
