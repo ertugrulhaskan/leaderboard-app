@@ -4,6 +4,7 @@ import { toTypedSchema } from "@vee-validate/zod";
 import * as zod from "zod";
 
 const storePlayers = usePlayersStore();
+const { players } = storeToRefs(storePlayers);
 
 const validationSchema = toTypedSchema(
   zod.object({
@@ -14,7 +15,18 @@ const validationSchema = toTypedSchema(
       .min(3, "Name must be at least 3 characters long")
       .refine((value) => !/[^a-zA-Z\s]/.test(value), {
         message: "Name must only contain letters and spaces",
-      }),
+      })
+      .refine(
+        (value) => {
+          const iseUserExist = players.value.filter(
+            (player) => player.name.toLowerCase() === value.toLowerCase(),
+          );
+          return iseUserExist.length === 0;
+        },
+        {
+          message: "Name already exists",
+        },
+      ),
     age: zod
       .string({
         required_error: "Age is required",
